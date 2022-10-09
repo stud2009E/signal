@@ -1,7 +1,8 @@
 from .scheduler import Schedule
-from .client import Client
+from .client import Client, Instrument
 
 __all__ = (
     "Schedule",
-    "Client"
+    "Client",
+    "Instrument"
 )

@@ -1,5 +1,5 @@
+from tinkoff.invest import Client as TClient, InstrumentIdType, CandleInterval
 import os
-from tinkoff.invest import Client as TClient, InstrumentIdType
 
 tinkoff_token = os.environ["tinkoff_token"]
 
@@ -38,7 +38,8 @@ class Instrument:
         with Client() as client:
             bond = client.instruments.bond_by(
                 id=figi,
-                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI)
+                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI
+            )
         
         return bond.instrument
     
@@ -54,6 +55,50 @@ class Instrument:
         with Client() as client:
             currency = client.instruments.currency_by(
                 id=figi,
-                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI)
+                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI
+            )
         
         return currency.instrument
+
+
+    def find_instrument(self, query):
+        with Client() as client:
+            result = client.instruments.find_instrument(query=query)
+        
+        return result.instruments
+
+    
+    def get_hour_candles(
+        self,
+        *,
+        figi,
+        from_,
+        to
+    ):
+        with Client() as client:
+            result = client.market_data.get_candles(
+                figi=figi,
+                from_=from_,
+                to=to,
+                interval=CandleInterval.CANDLE_INTERVAL_HOUR
+            )
+        
+        return result.candles
+
+
+    def get_day_candles(
+        self,
+        *,
+        figi,
+        from_,
+        to
+    ):
+        with Client() as client:
+            result = client.market_data.get_candles(
+                figi=figi,
+                from_=from_,
+                to=to,
+                interval=CandleInterval.CANDLE_INTERVAL_DAY
+            )
+        
+        return result.candles
