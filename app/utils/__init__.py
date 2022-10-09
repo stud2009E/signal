@@ -1,12 +1,8 @@
-import os
-
-tinkoff_token = os.environ["tinkoff_token"]
-telegram_token = os.environ["telegram_token"]
-
 from .scheduler import Schedule
+from .client import Client
 
 __all__ = (
-    "tinkoff_token",
-    "telegram_token",
-    "Schedule"
+    "Schedule",
+    "Client",
+    "instruments"
 )

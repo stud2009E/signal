@@ -1,6 +1,5 @@
-from tinkoff.invest import Client
+from .client import Client
 from datetime import datetime, timezone
-from utils import tinkoff_token
 
 
 class Schedule:
@@ -12,7 +11,7 @@ class Schedule:
 
     def _with_client(self, *, from_, to):
         schedule = None
-        with Client(tinkoff_token) as client:
+        with Client() as client:
             schedule = client.instruments.trading_schedules(exchange=self.exchange, from_ = from_, to = to)
 
         return schedule
