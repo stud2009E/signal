@@ -7,9 +7,7 @@ class Schedule:
     def __init__(self, exchange:str):
         self.exchange = exchange
         self.start = datetime.now(tz=timezone.utc)
-        self._schedule = self._get_today_schedule(self.start)
-        
-        print(self.start)
+        self._schedule = self._get_today_schedule()
 
 
     def _with_client(self, *, from_, to):
@@ -20,25 +18,23 @@ class Schedule:
         return schedule
 
 
-    def get_today(self):
+    def get_data(self):
         now = datetime.now(tz=timezone.utc)
 
         today = datetime(year=now.year, month=now.month, day=now.day, tzinfo=timezone.utc)
         start = datetime(year=self.start.year, month=self.start.month, day=self.start.day, tzinfo=timezone.utc)
 
-        print(today)
-
         if today > start:
             self.start = now
-            self._schedule = self._get_today_schedule(now)
+            self._schedule = self._get_today_schedule()
         
         return self._schedule
 
 
-    def _get_today_schedule(self, today):
+    def _get_today_schedule(self):
         day = None
         
-        tradingSchedulesResponse = self._with_client(from_=today, to=today)
+        tradingSchedulesResponse = self._with_client(from_=self.start, to=self.start)
         tradingSchedule = tradingSchedulesResponse.exchanges[0]
 
         if not tradingSchedule is None: 
