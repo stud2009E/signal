@@ -1,13 +1,15 @@
 from tinkoff.invest import Client
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 from utils import tinkoff_token
 
 
 class Schedule:
     def __init__(self, exchange:str):
         self.exchange = exchange
-        self.start = datetime.now()
+        self.start = datetime.now(tz=timezone.utc)
         self._schedule = self._get_today_schedule(self.start)
+        
+        print(self.start)
 
 
     def _with_client(self, *, from_, to):
@@ -19,9 +21,14 @@ class Schedule:
 
 
     def get_today(self):
-        now = datetime.now()
+        now = datetime.now(tz=timezone.utc)
 
-        if (now - self.start) > timedelta(days=1):
+        today = datetime(year=now.year, month=now.month, day=now.day, tzinfo=timezone.utc)
+        start = datetime(year=self.start.year, month=self.start.month, day=self.start.day, tzinfo=timezone.utc)
+
+        print(today)
+
+        if today > start:
             self.start = now
             self._schedule = self._get_today_schedule(now)
         
