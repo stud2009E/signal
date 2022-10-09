@@ -3,6 +3,5 @@ from .client import Client
 
 __all__ = (
     "Schedule",
-    "Client",
-    "instruments"
+    "Client"
 )
