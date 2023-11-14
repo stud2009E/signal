@@ -15,11 +15,10 @@ public class App {
         App app = new App();
 
         try {
-            System.out.println("Opened database successfully");
-
-            initDB();
-
-            app.addInventory("HP Laptop", 3, 100);
+//
+//            initDB();
+//
+//            app.addInventory("HP Laptop", 3, 100);
 
             app.selectAll();
         } catch (Exception e) {

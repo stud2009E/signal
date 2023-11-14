@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create_warehouse_table" author="pab">
+        <createTable tableName="warehouse">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="capacity" type="real"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="create_material_table" author="pab">
+        <createTable tableName="materials">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_inventory_table" author="pab">
+        <createTable tableName="inventory">
+            <column name="warehouse_id" type="integer" />
+            <column name="material_id" type="integer"/>
+            <column name="qty" type="real"/>
+        </createTable>
+        <addPrimaryKey tableName="inventory" columnNames="warehouse_id,material_id"/>
+        <addForeignKeyConstraint baseTableName="inventory" baseColumnNames="warehouse_id"
+                                 constraintName="warehouse_id_fk"
+                                 referencedTableName="warehouse"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="inventory" baseColumnNames="material_id"
+                                 constraintName="material_id_fk" referencedTableName="material"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
