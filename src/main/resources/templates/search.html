@@ -10,8 +10,15 @@
         <input type="submit" value="Submit">
     </form>
     <div class="container">
-        <ul th:each="item : ${data}">
-            <li th:text="${item}">1</li>
+        <ul>
+            <li th:each="item : ${data}">
+                <p>
+                    <span th:text="${item.getFigi()}">figi</span>
+                    <span th:text="${item.getTicker()}">figi</span>
+                    <span th:text="${item.getInstrumentType()}">figi</span>
+                    <span th:text="${item.getName()}">figi</span>
+                </p>
+            </li>
         </ul>
     </div>
 </body>
