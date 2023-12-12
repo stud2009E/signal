@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Share</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+<body>
+    <h1>Asset</h1>
+    <div class="container">
+        <p th:text="${share.getCountryOfRiskName()}">name</p>
+        <p th:text="${share.getCountryOfRisk()}">name</p>
+        <p th:text="${share.getName()}">name</p>
+        <p th:text="${share.getSector()}"></p>
+        <p th:text="${share.getNominal()}"></p>
+    </div>
+</body>
+</html>

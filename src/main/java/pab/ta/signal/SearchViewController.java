@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.tinkoff.piapi.contract.v1.InstrumentShort;
@@ -39,11 +38,6 @@ public class SearchViewController {
         }
 
         return "search";
-    }
-
-    @PostMapping(value = "/search")
-    public String search(@RequestParam(name = "value", required = false, defaultValue = "") String value){
-        return "redirect:/?search=" + value;
     }
 
 }
