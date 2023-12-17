@@ -1,4 +1,4 @@
-package pab.ta.signal;
+package pab.ta.signal.config;
 
 
 import org.springframework.beans.factory.annotation.Value;

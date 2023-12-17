@@ -16,7 +16,7 @@
                 <p>
                     <span th:text="${item.getTicker()}">ticker</span>
                     <span th:text="${item.getInstrumentType()}">name</span>
-                    <a th:href="'/asset/share/' + ${item.getFigi()}" th:text="${item.getName()}">figi</a>
+                    <a href="/asset/figi" th:href="|/asset/share/${item.getFigi()}|" th:text="${item.getName()}">figi</a>
                 </p>
             </li>
         </ul>
