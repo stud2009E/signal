@@ -12,11 +12,15 @@
     </form>
     <div class="container">
         <ul>
-            <li th:each="item : ${data}">
-                <p>
+            <li th:each="item:${data}">
+                <p th:switch="${item.getInstrumentKind()}">
+
                     <span th:text="${item.getTicker()}">ticker</span>
                     <span th:text="${item.getInstrumentType()}">name</span>
-                    <a href="/asset/figi" th:href="|/asset/share/${item.getFigi()}|" th:text="${item.getName()}">figi</a>
+
+                    <a th:case="${typeShare}" th:href="|/asset/share/${item.getUid()}|" th:text="${item.getName()}">uid</a>
+                    <a th:case="${typeCurrency}" th:href="|/asset/currency/${item.getUid()}|" th:text="${item.getName()}">uid</a>
+                    <a th:case="${typeFuture}" th:href="|/asset/future/${item.getUid()}|" th:text="${item.getName()}">uid</a>
                 </p>
             </li>
         </ul>

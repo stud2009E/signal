@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Future</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+<body>
+    <h1>Asset</h1>
+    <div class="container">
+        <p th:text="${future.getName()}">getName</p>
+        <p th:text="${future.getTicker()}">getTicker</p>
+        <p th:text="${future.getSector()}">getSector</p>
+        <p th:text="${future.getBasicAsset()}">getBasicAsset</p>
+        <p th:text="${future.getCountryOfRiskName()}">getCountryOfRiskName</p>
+    </div>
+</body>
+</html>

@@ -7,11 +7,12 @@
 <body>
     <h1>Asset</h1>
     <div class="container">
-        <p th:text="${share.getCountryOfRiskName()}">name</p>
-        <p th:text="${share.getCountryOfRisk()}">name</p>
+        <p th:text="${share.getTicker()}">name</p>
         <p th:text="${share.getName()}">name</p>
-        <p th:text="${share.getSector()}"></p>
-        <p th:text="${share.getNominal()}"></p>
+        <p th:text="${share.getSector()}">sector</p>
+        <p th:text="${share.getCountryOfRiskName()}">getCountryOfRiskName</p>
     </div>
+
+    <div th:replace="fragments/brand.html :: brand">...</div>
 </body>
 </html>
