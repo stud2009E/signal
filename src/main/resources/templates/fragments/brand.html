@@ -5,14 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </head>
 <body>
-    <div th:fragment="brand"/>
+    <div th:fragment="content">
         <h1>Brand</h1>
-        <div th:if="${brand != null}}" class="container brand">
+        <div th:if="${brand != null}" class="container brand">
             <p th:text="${brand.getCompany()}">getCompany</p>
             <p th:text="${brand.getInfo()}">getInfo</p>
-            <p th:text="${brand.getDescription()}">getDescription</p>
         </div>
-        <div th:if="${brand == null}}" class="container brand">
+        <div th:if="${brand == null}" class="container brand">
             No brand info
         </div>
     </div>

@@ -9,6 +9,7 @@ import pab.ta.signal.util.AssetCache;
 import ru.tinkoff.piapi.contract.v1.*;
 import ru.tinkoff.piapi.core.InvestApi;
 
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -58,7 +59,6 @@ public class AssetController {
         Currency currency = currencyFuture.get();
 
         model.addAttribute("currency", currency);
-        addBrand(uid, model);
 
         return "currency";
     }
@@ -69,17 +69,20 @@ public class AssetController {
         Future future = futureFuture.get();
 
         model.addAttribute("future", future);
-        addBrand(uid, model);
 
         return "future";
     }
 
     private void addBrand(String uid, Model model) throws ExecutionException, InterruptedException {
         String assetUid = assetCache.getAssetFullUid(uid);
-        CompletableFuture<AssetFull> assetFuture = investApi.getInstrumentsService().getAssetBy(assetUid);
-        AssetFull asset = assetFuture.get();
+        Brand brand = null;
+        if (!Objects.isNull(assetUid)) {
+            CompletableFuture<AssetFull> assetFuture = investApi.getInstrumentsService().getAssetBy(assetUid);
+            AssetFull asset = assetFuture.get();
+            brand = asset.getBrand();
+        }
 
-        model.addAttribute("brand", asset.getBrand());
+        model.addAttribute("brand", brand);
     }
 
 }

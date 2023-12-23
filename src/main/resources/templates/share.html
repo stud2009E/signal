@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </head>
 <body>
-    <h1>Asset</h1>
+    <h1>Share</h1>
     <div class="container">
         <p th:text="${share.getTicker()}">name</p>
         <p th:text="${share.getName()}">name</p>
@@ -13,6 +13,6 @@
         <p th:text="${share.getCountryOfRiskName()}">getCountryOfRiskName</p>
     </div>
 
-    <div th:replace="fragments/brand.html :: brand">...</div>
+    <div class="brand" th:insert="~{fragments/brand :: content}">...</div>
 </body>
 </html>
