@@ -7,46 +7,45 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pab.ta.signal.util.AssetCache;
 import ru.tinkoff.piapi.contract.v1.InstrumentShort;
-import ru.tinkoff.piapi.contract.v1.InstrumentType;
-import ru.tinkoff.piapi.core.InvestApi;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequestMapping(consumes = MediaType.ALL_VALUE)
 public class SearchController {
 
-    private InvestApi investApi;
+    private AssetCache assetCache;
 
     @Autowired
-    public void setInvestApi(InvestApi investApi) {
-        this.investApi = investApi;
+    public void setAssetCache(AssetCache assetCache) {
+        this.assetCache = assetCache;
     }
 
     @GetMapping(value = "/")
-    public String index(@RequestParam(name = "search", required = false, defaultValue = "") String value, Model model) throws ExecutionException, InterruptedException {
+    public String index(@RequestParam(name = "search", required = false, defaultValue = "") String search,
+                        @RequestParam(name = "type", required = false, defaultValue = "all") String type,
+                        Model model) {
 
-        if (!value.isEmpty()) {
-            model.addAttribute("search", value);
-            model.addAttribute("typeShare", InstrumentType.INSTRUMENT_TYPE_SHARE);
-            model.addAttribute("typeCurrency", InstrumentType.INSTRUMENT_TYPE_CURRENCY);
-            model.addAttribute("typeFuture", InstrumentType.INSTRUMENT_TYPE_FUTURES);
+        if (search.length() >= 3) {
+            model.addAttribute("search", search);
 
-            CompletableFuture<List<InstrumentShort>> feature = investApi.getInstrumentsService().findInstrument(value);
-            List<InstrumentShort> instruments = feature.get().stream()
-                    .filter(instrumentShort ->
-                            instrumentShort.getInstrumentKind() == InstrumentType.INSTRUMENT_TYPE_SHARE
-                                    || instrumentShort.getInstrumentKind() == InstrumentType.INSTRUMENT_TYPE_CURRENCY
-                                    || instrumentShort.getInstrumentKind() == InstrumentType.INSTRUMENT_TYPE_FUTURES)
-                    .toList();
+            List<InstrumentShort> instrumentShorts;
+            switch (type) {
+                case "futures", "currency", "share" -> {
+                    model.addAttribute("type", type);
+                    instrumentShorts = assetCache.findInstrument(search, type);
+                }
+                default -> {
+                    model.addAttribute("type", "all");
+                    instrumentShorts = assetCache.findInstrument(search);
+                }
+            };
 
-            model.addAttribute("data", instruments);
+            model.addAttribute("instruments", instrumentShorts);
         }
 
         return "search";
     }
-
 }

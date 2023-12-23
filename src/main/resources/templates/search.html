@@ -5,25 +5,56 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </head>
 <body>
-    <h1>Search ticker</h1>
+    <h1>Search instrument</h1>
     <form action="/" method="GET" accept-charset="utf-8">
-        <input name="search" th:value="${search}">
-        <input type="submit" value="Submit">
+
+        <input name="search" th:value="${search}" placeholder="min 3 symbols">
+        <fieldset>
+            <legend>search by:</legend>
+            <div>
+                <input type="radio" id="all" name="type" value="all" th:checked="${type == 'all'}" />
+                <label for="all">all</label>
+            </div>
+            <div>
+                <input type="radio" id="share" name="type" value="share" th:checked="${type == 'share'}"/>
+                <label for="share">share</label>
+            </div>
+            <div>
+                <input type="radio" id="currency" name="type" value="currency" th:checked="${type == 'currency'}"/>
+                <label for="currency">currency</label>
+            </div>
+            <div>
+                <input type="radio" id="futures" name="type" value="futures" th:checked="${type == 'futures'}"/>
+                <label for="futures">futures</label>
+            </div>
+        </fieldset>
+        <br>
+        <input type="submit" value="Search">
     </form>
+
     <div class="container">
-        <ul>
-            <li th:each="item:${data}">
-                <p th:switch="${item.getInstrumentKind()}">
+        <ol>
+            <li th:each="item:${instruments}">
+                <a th:if="${item.getInstrumentType() == 'share'}"
+                   th:href="|/instrument/share/${item.getUid()}|"
+                   th:text="${item.getTicker()}">share link</a>
 
-                    <span th:text="${item.getTicker()}">ticker</span>
-                    <span th:text="${item.getInstrumentType()}">name</span>
+                <a th:if="${item.getInstrumentType() == 'currency'}"
+                   th:href="|/instrument/currency/${item.getUid()}|"
+                   th:text="${item.getTicker()}">currency link</a>
 
-                    <a th:case="${typeShare}" th:href="|/asset/share/${item.getUid()}|" th:text="${item.getName()}">uid</a>
-                    <a th:case="${typeCurrency}" th:href="|/asset/currency/${item.getUid()}|" th:text="${item.getName()}">uid</a>
-                    <a th:case="${typeFuture}" th:href="|/asset/future/${item.getUid()}|" th:text="${item.getName()}">uid</a>
+                <a th:if="${item.getInstrumentType() == 'futures'}"
+                   th:href="|/instrument/futures/${item.getUid()}|"
+                   th:text="${item.getTicker()}">currency link</a>
+
+                <span th:text="${item.getInstrumentType()}">getInstrumentType</span>
+                <p>
+                    <span th:text="${item.getName()}">getName</span>
                 </p>
+                <hr/>
             </li>
-        </ul>
+        </ol>
+
     </div>
 </body>
 </html>
