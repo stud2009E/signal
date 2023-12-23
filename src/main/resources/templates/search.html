@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+<body>
+    <h1>Search instrument</h1>
+    <form action="/" method="GET" accept-charset="utf-8">
+
+        <input name="search" th:value="${search}" placeholder="min 3 symbols">
+        <fieldset>
+            <legend>search by:</legend>
+            <div>
+                <input type="radio" id="all" name="type" value="all" th:checked="${type == 'all'}" />
+                <label for="all">all</label>
+            </div>
+            <div>
+                <input type="radio" id="share" name="type" value="share" th:checked="${type == 'share'}"/>
+                <label for="share">share</label>
+            </div>
+            <div>
+                <input type="radio" id="currency" name="type" value="currency" th:checked="${type == 'currency'}"/>
+                <label for="currency">currency</label>
+            </div>
+            <div>
+                <input type="radio" id="futures" name="type" value="futures" th:checked="${type == 'futures'}"/>
+                <label for="futures">futures</label>
+            </div>
+        </fieldset>
+        <br>
+        <input type="submit" value="Search">
+    </form>
+
+    <div class="container">
+        <ol>
+            <li th:each="item:${instruments}">
+                <a th:if="${item.getInstrumentType() == 'share'}"
+                   th:href="|/instrument/share/${item.getUid()}|"
+                   th:text="${item.getTicker()}">share link</a>
+
+                <a th:if="${item.getInstrumentType() == 'currency'}"
+                   th:href="|/instrument/currency/${item.getUid()}|"
+                   th:text="${item.getTicker()}">currency link</a>
+
+                <a th:if="${item.getInstrumentType() == 'futures'}"
+                   th:href="|/instrument/futures/${item.getUid()}|"
+                   th:text="${item.getTicker()}">currency link</a>
+
+                <span th:text="${item.getInstrumentType()}">getInstrumentType</span>
+                <p>
+                    <span th:text="${item.getName()}">getName</span>
+                </p>
+                <hr/>
+            </li>
+        </ol>
+
+    </div>
+</body>
+</html>

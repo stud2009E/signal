@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Share</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+<body>
+    <h1>Share</h1>
+    <div class="container">
+        <p th:text="${share.getTicker()}">name</p>
+        <p th:text="${share.getName()}">name</p>
+        <p th:text="${share.getSector()}">sector</p>
+        <p th:text="${share.getCountryOfRiskName()}">getCountryOfRiskName</p>
+    </div>
+
+    <div class="brand" th:insert="~{fragments/brand :: content}">...</div>
+</body>
+</html>
